@@ -1,5 +1,10 @@
+import sys
+import ctypes
 from math import factorial
-from PyQt6.QtCore import QObject, pyqtSlot
+from PyQt6.QtCore import QUrl, QObject, pyqtSlot
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtQuick import QQuickView
+from PyQt6.QtGui import QIcon
 
 
 class CombinatoricsCalculation(QObject):
@@ -81,3 +86,21 @@ class CombinatoricsCalculation(QObject):
         if len(result) > 64:
             return "Результат: ответ слишком большой"
         return f"Результат: {result}"
+
+
+def main():
+    app_id = 'Addefan.CombinatoricsCalculator.0.1'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(app_id)
+    app = QApplication([])
+    app.setApplicationName("Combinatorics Calculator")
+    app.setWindowIcon(QIcon("icon.ico"))
+    calculator = CombinatoricsCalculation()
+    view = QQuickView()
+    view.setSource(QUrl(r"view\MainWindow.qml"))
+    view.show()
+    view.rootContext().setContextProperty("calculator", calculator)
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()
