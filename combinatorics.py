@@ -1,7 +1,7 @@
 import sys
 import ctypes
 from math import factorial
-from PyQt6.QtCore import QUrl, QObject, pyqtSlot
+from PyQt6.QtCore import QUrl, QObject, pyqtSlot, QSize
 from PyQt6.QtWidgets import QApplication
 from PyQt6.QtQuick import QQuickView
 from PyQt6.QtGui import QIcon
@@ -96,6 +96,8 @@ def main():
     app.setWindowIcon(QIcon("icon.ico"))
     calculator = CombinatoricsCalculation()
     view = QQuickView()
+    view.setMaximumSize(QSize(480, 270))
+    view.setMinimumSize(QSize(480, 270))
     view.setSource(QUrl(r"view\MainWindow.qml"))
     view.show()
     view.rootContext().setContextProperty("calculator", calculator)
